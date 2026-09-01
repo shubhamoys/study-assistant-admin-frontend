@@ -1,26 +1,273 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * Field Notes Brutalism design system — same tokens as study-assistant-frontend
+ * (see that repo's UI_UX_DESIGN.md for the full spec: palette rationale,
+ * elevation system, motion). This is the admin panel, a companion app to the
+ * same product, so it deliberately reuses the exact palette/fonts/component
+ * language rather than inventing a separate aesthetic — consistency with the
+ * main app matters more here than a fresh visual identity for an internal tool.
+ *
+ * Theming is driven by next-themes with attribute="class" (see
+ * src/providers/theme-provider.tsx) — dark mode is the standard shadcn `.dark`
+ * class selector.
+ */
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ---- Field Notes Brutalism tokens — "Warm Paper" (light) ---- */
+  --bg-page: #faf6ee;
+  --bg-card: #ffffff;
+  --bg-accent: #efe9db;
+  --bg-overlay: rgb(26 26 24 / 45%);
+
+  --ink-primary: #1b1b18;
+  --ink-secondary: #55524a;
+  --ink-tertiary: #8a867a;
+
+  --brand-primary: #1e4d3b;
+  --brand-primary-hover: #163b2c;
+  --brand-on-primary: #faf6ee;
+
+  --brand-yellow: #f9d56e;
+  --brand-lavender: #d4c5f9;
+
+  --state-success: #2f7a4e;
+  --state-success-bg: #e3f3e8;
+  --state-error: #b3261e;
+  --state-error-bg: #fbe9e7;
+  --state-warning: #9a5b00;
+  --state-warning-bg: #fcefd8;
+  --state-info: #1e4d3b;
+  --state-info-bg: #e7f0ea;
+
+  /* Hard offset shadows — bound to --ink-primary so dark mode gets a "glow" for free */
+  --elevation-1: 4px 4px 0px var(--ink-primary);
+  --elevation-2: 6px 6px 0px var(--ink-primary);
+  --elevation-3: 8px 8px 0px var(--ink-primary);
+
+  --radius-card: 12px;
+  --radius-btn: 10px;
+  --radius-tag: 6px;
+
+  /* ---- shadcn/ui token bridge — keeps every primitive on-theme for free ---- */
+  --background: var(--bg-page);
+  --foreground: var(--ink-primary);
+  --card: var(--bg-card);
+  --card-foreground: var(--ink-primary);
+  --popover: var(--bg-card);
+  --popover-foreground: var(--ink-primary);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--brand-on-primary);
+  --secondary: var(--bg-accent);
+  --secondary-foreground: var(--ink-primary);
+  --muted: var(--bg-accent);
+  --muted-foreground: var(--ink-secondary);
+  --accent: var(--bg-accent);
+  --accent-foreground: var(--ink-primary);
+  --destructive: var(--state-error);
+  --destructive-foreground: var(--bg-card);
+  --border: var(--ink-primary);
+  --input: var(--bg-accent);
+  --ring: var(--brand-primary);
+  --radius: 0.625rem;
+}
+
+.dark {
+  /* ---- Field Notes Brutalism tokens — "Inkboard" (dark) ---- */
+  --bg-page: #15161a;
+  --bg-card: #1e1f23;
+  --bg-accent: #27282d;
+  --bg-overlay: rgb(0 0 0 / 60%);
+
+  --ink-primary: #ececE6;
+  --ink-secondary: #a6a399;
+  --ink-tertiary: #6e6c64;
+
+  --brand-primary: #4f9c77;
+  --brand-primary-hover: #62b78c;
+  --brand-on-primary: #0e1410;
+
+  --brand-yellow: #d8b23e;
+  --brand-lavender: #9983d8;
+
+  --state-success: #5fbf8f;
+  --state-success-bg: #1b2b22;
+  --state-error: #e5837c;
+  --state-error-bg: #2e1b19;
+  --state-warning: #e0b04d;
+  --state-warning-bg: #2e2717;
+  --state-info: #4f9c77;
+  --state-info-bg: #1b2620;
+
+  --background: var(--bg-page);
+  --foreground: var(--ink-primary);
+  --card: var(--bg-card);
+  --card-foreground: var(--ink-primary);
+  --popover: var(--bg-card);
+  --popover-foreground: var(--ink-primary);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--brand-on-primary);
+  --secondary: var(--bg-accent);
+  --secondary-foreground: var(--ink-primary);
+  --muted: var(--bg-accent);
+  --muted-foreground: var(--ink-secondary);
+  --accent: var(--bg-accent);
+  --accent-foreground: var(--ink-primary);
+  --destructive: var(--state-error);
+  --destructive-foreground: var(--ink-primary);
+  --border: var(--ink-primary);
+  --input: var(--bg-accent);
+  --ring: var(--brand-primary);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Raw design-system tokens, exposed as Tailwind utilities (bg-*, text-*, border-*) */
+  --color-bg-page: var(--bg-page);
+  --color-bg-card: var(--bg-card);
+  --color-bg-accent: var(--bg-accent);
+  --color-ink-primary: var(--ink-primary);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-tertiary: var(--ink-tertiary);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-brand-on-primary: var(--brand-on-primary);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-lavender: var(--brand-lavender);
+  --color-state-success: var(--state-success);
+  --color-state-success-bg: var(--state-success-bg);
+  --color-state-error: var(--state-error);
+  --color-state-error-bg: var(--state-error-bg);
+  --color-state-warning: var(--state-warning);
+  --color-state-warning-bg: var(--state-warning-bg);
+  --color-state-info: var(--state-info);
+  --color-state-info-bg: var(--state-info-bg);
+
+  --font-sans: var(--font-lexend);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-fragment-mono);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-card: var(--radius-card);
+  --radius-btn: var(--radius-btn);
+  --radius-tag: var(--radius-tag);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    position: relative;
+    isolation: isolate;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  /* Low-opacity paper grain on the page background only — never on --bg-card (legibility). */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* The base surface for anything the user reads or acts on. */
+  .index-card {
+    background: var(--bg-card);
+    border: 3px solid var(--ink-primary);
+    border-radius: var(--radius-card);
+    box-shadow: var(--elevation-2);
+    padding: 1rem;
+  }
+
+  /* Empty-state variant: dashed border, no shadow. */
+  .index-card-dashed {
+    background: transparent;
+    border: 3px dashed var(--ink-primary);
+    border-radius: var(--radius-card);
+    box-shadow: none;
+    padding: 1rem;
+  }
+
+  /* Tactile press interaction for buttons, clickable cards. */
+  .neo-interactive {
+    border: 3px solid var(--ink-primary);
+    border-radius: var(--radius-btn);
+    box-shadow: var(--elevation-1);
+    transition:
+      transform 0.1s cubic-bezier(0.2, 0, 0, 1),
+      box-shadow 0.1s cubic-bezier(0.2, 0, 0, 1);
+  }
+  .neo-interactive:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--ink-primary);
+  }
+  .neo-interactive:active,
+  .neo-interactive[aria-pressed="true"] {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px var(--ink-primary);
+  }
+  .neo-interactive:focus-visible {
+    outline: 3px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  /* Flat, printed-looking category/role/status labels — no shadow. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid var(--ink-primary);
+    border-radius: var(--radius-tag);
+    padding: 2px 10px;
+    background: var(--brand-lavender);
+    color: var(--ink-primary);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .neo-interactive {
+      transition: none !important;
+    }
+  }
 }
