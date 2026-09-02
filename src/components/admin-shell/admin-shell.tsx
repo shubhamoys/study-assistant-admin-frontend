@@ -8,11 +8,13 @@ import { useAuth } from "@/features/auth/use-auth";
 import { useLogout } from "@/features/auth/use-logout";
 import styles from "./admin-shell.module.scss";
 
-// Each checkpoint appends its own section here once built — Dashboard is the
-// only one that exists yet (checkpoint 1). Keeping this a plain array now
-// rather than reaching for anything fancier; it'll still be a five-line list
-// once user/category/deck/analytics land.
-const NAV_LINKS = [{ href: "/dashboard", label: "Dashboard" }];
+// Each checkpoint appends its own section here once built. Keeping this a
+// plain array rather than reaching for anything fancier.
+const NAV_LINKS = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/users", label: "Users" },
+  { href: "/categories", label: "Categories" },
+];
 
 /** Wraps every authenticated admin page — sidebar nav + topbar. Assumes the caller has already gated access via useRequireAdmin. */
 export function AdminShell({ children }: { children: React.ReactNode }) {
