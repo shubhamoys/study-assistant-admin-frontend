@@ -14,6 +14,8 @@ const NAV_LINKS = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/users", label: "Users" },
   { href: "/categories", label: "Categories" },
+  { href: "/decks", label: "Decks" },
+  { href: "/analytics", label: "Analytics" },
 ];
 
 /** Wraps every authenticated admin page — sidebar nav + topbar. Assumes the caller has already gated access via useRequireAdmin. */

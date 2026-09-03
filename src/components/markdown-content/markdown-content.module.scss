@@ -1,0 +1,163 @@
+// Deliberately not importing a generic highlight.js theme stylesheet — the
+// .hljs-* rules below are hand-picked from this app's own design tokens so
+// code blocks stay on-brand and theme-aware (dark/light) instead of using a
+// mismatched off-the-shelf color scheme. Same rules as study-assistant-frontend's.
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  overflow-wrap: break-word;
+
+  > *:first-child {
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink-primary);
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  h3 {
+    font-size: 1.125rem;
+  }
+  h4 {
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: var(--brand-primary);
+    text-underline-offset: 3px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  ul,
+  ol {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+
+  li + li {
+    margin-top: 0.25rem;
+  }
+
+  blockquote {
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--ink-tertiary);
+    color: var(--ink-tertiary);
+    font-style: italic;
+  }
+
+  img {
+    max-width: 100%;
+    border: 2px solid var(--ink-primary);
+    border-radius: var(--radius-btn);
+  }
+
+  hr {
+    border: none;
+    border-top: 2px dashed var(--ink-tertiary);
+  }
+
+  // Inline code
+  :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: color-mix(in srgb, var(--ink-primary) 8%, transparent);
+    border: 1px solid var(--ink-tertiary);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+  }
+
+  // Fenced code blocks
+  pre {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    background: color-mix(in srgb, var(--ink-primary) 5%, var(--bg-card));
+    border: 2px solid var(--ink-primary);
+    border-radius: var(--radius-btn);
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--ink-primary);
+      background: none;
+      border: none;
+      padding: 0;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.875rem;
+  }
+
+  th,
+  td {
+    border: 2px solid var(--ink-primary);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  th {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: color-mix(in srgb, var(--ink-primary) 6%, transparent);
+    color: var(--ink-primary);
+  }
+}
+
+// highlight.js token classes, mapped onto this app's own palette.
+.content :global(.hljs-keyword),
+.content :global(.hljs-selector-tag),
+.content :global(.hljs-literal) {
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+.content :global(.hljs-string),
+.content :global(.hljs-attr) {
+  color: var(--state-success);
+}
+.content :global(.hljs-comment) {
+  color: var(--ink-tertiary);
+  font-style: italic;
+}
+.content :global(.hljs-number) {
+  color: var(--state-warning);
+}
+.content :global(.hljs-title),
+.content :global(.hljs-title.function_),
+.content :global(.hljs-section) {
+  color: var(--state-info);
+  font-weight: 600;
+}
