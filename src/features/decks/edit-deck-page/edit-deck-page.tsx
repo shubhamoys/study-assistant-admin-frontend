@@ -62,6 +62,8 @@ export function EditDeckPage({ deckId }: EditDeckPageProps) {
               coverUrl: deck.coverUrl,
               categoryId: deck.category?.id ?? "",
               difficulty: deck.difficulty ?? "BEGINNER",
+              isFree: deck.isFree,
+              price: deck.price,
             }}
           />
           <div className={styles.flashcards}>

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Controller, useForm, type Control } from "react-hook-form";
+import { Controller, useForm, useWatch, type Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { CombinedGraphQLErrors } from "@apollo/client/errors";
@@ -40,6 +40,9 @@ interface DeckFormInitial {
   coverUrl: string | null;
   categoryId: string;
   difficulty: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+  isFree: boolean;
+  /** Paise, as stored — converted to whole rupees for the form's default value. */
+  price: number;
 }
 
 interface DeckFormProps {
@@ -67,8 +70,11 @@ export function DeckForm({ mode, deckId, initial }: DeckFormProps) {
       coverUrl: initial?.coverUrl ?? undefined,
       categoryId: initial?.categoryId ?? "",
       difficulty: initial?.difficulty ?? "BEGINNER",
+      isFree: initial?.isFree ?? true,
+      priceRupees: initial?.price ? initial.price / 100 : undefined,
     },
   });
+  const isFree = useWatch({ control, name: "isFree" });
 
   const [createDeck, { error: createError }] = useMutation<
     AdminCreateDeckMutationData,
@@ -197,6 +203,55 @@ export function DeckForm({ mode, deckId, initial }: DeckFormProps) {
             <option value="ADVANCED">Advanced</option>
           </Select>
         </div>
+      </div>
+
+      <div className={styles.row}>
+        <div className={styles.field}>
+          <label className={styles.fieldLabel} htmlFor="deck-pricing">
+            Pricing
+          </label>
+          <Controller
+            name="isFree"
+            control={control}
+            render={({ field }) => (
+              <Select
+                id="deck-pricing"
+                name={field.name}
+                value={field.value ? "true" : "false"}
+                onChange={(event) =>
+                  field.onChange(event.target.value === "true")
+                }
+                onBlur={field.onBlur}
+                ref={field.ref}
+              >
+                <option value="true">Free</option>
+                <option value="false">Paid</option>
+              </Select>
+            )}
+          />
+        </div>
+
+        {!isFree && (
+          <div className={styles.field}>
+            <label className={styles.fieldLabel} htmlFor="deck-price">
+              Price (₹)
+            </label>
+            <Input
+              id="deck-price"
+              type="number"
+              min={1}
+              step={1}
+              inputMode="numeric"
+              aria-invalid={Boolean(errors.priceRupees)}
+              {...register("priceRupees")}
+            />
+            {errors.priceRupees && (
+              <span className={styles.fieldError}>
+                {errors.priceRupees.message}
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       <CoverUploader control={control} />

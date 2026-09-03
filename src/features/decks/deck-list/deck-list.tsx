@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useDebouncedValue } from "@/hooks/use-debounce";
 import { MAIN_APP_ORIGIN } from "@/lib/graphql-endpoint";
+import { formatPrice } from "@/lib/format-price";
 import {
   ADMIN_DECKS_QUERY,
   ADMIN_DELETE_DECK_MUTATION,
@@ -98,7 +99,14 @@ export function DeckList() {
         {data?.adminDecks.map((deck) => (
           <article key={deck.id} className={`${styles.card} index-card`}>
             <div className={styles.cardBody}>
-              <span className="tag">{deck.category?.name ?? "Uncategorized"}</span>
+              <div className={styles.cardTags}>
+                <span className="tag">
+                  {deck.category?.name ?? "Uncategorized"}
+                </span>
+                <span className="tag">
+                  {deck.isFree ? "Free" : formatPrice(deck.price)}
+                </span>
+              </div>
               <h2 className={styles.cardTitle}>{deck.title}</h2>
               <p className={styles.cardMeta}>
                 {deck.cardCount} {deck.cardCount === 1 ? "card" : "cards"} ·{" "}

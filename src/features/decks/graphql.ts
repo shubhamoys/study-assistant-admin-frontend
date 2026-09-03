@@ -15,6 +15,8 @@ export interface DeckSummary {
   description: string | null;
   coverUrl: string | null;
   difficulty: Difficulty | null;
+  isFree: boolean;
+  price: number;
   cardCount: number;
   downloadsCount: number;
   ratingAverage: number;
@@ -53,6 +55,8 @@ export const ADMIN_DECKS_QUERY = gql`
       description
       coverUrl
       difficulty
+      isFree
+      price
       cardCount
       downloadsCount
       ratingAverage
@@ -88,6 +92,8 @@ export const DECK_QUERY = gql`
       description
       coverUrl
       difficulty
+      isFree
+      price
       category {
         id
         name
@@ -104,6 +110,8 @@ export interface DeckDetail {
   description: string | null;
   coverUrl: string | null;
   difficulty: Difficulty | null;
+  isFree: boolean;
+  price: number;
   category: Category | null;
 }
 
@@ -121,6 +129,9 @@ export interface DeckInput {
   coverUrl?: string;
   categoryId: string;
   difficulty: Difficulty;
+  isFree: boolean;
+  /** Whole rupees (e.g. 499) — the backend converts to paise. Required when isFree is false. */
+  priceRupees?: number;
 }
 
 export const ADMIN_CREATE_DECK_MUTATION = gql`

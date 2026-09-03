@@ -49,6 +49,12 @@
   gap: 0.5rem;
 }
 
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
 .cardTitle {
   margin: 0;
   font-family: var(--font-display);
