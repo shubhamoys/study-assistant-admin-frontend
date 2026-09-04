@@ -15,11 +15,13 @@ export default function NewDeckPage() {
 
   return (
     <AdminShell>
-      <Link href="/decks" className={styles.backLink}>
-        ← Back to decks
-      </Link>
-      <h1 className={styles.heading}>Create deck</h1>
-      <DeckForm mode="create" />
+      <div className={styles.content}>
+        <Link href="/decks" className={styles.backLink}>
+          ← Back to decks
+        </Link>
+        <h1 className={styles.heading}>Create deck</h1>
+        <DeckForm mode="create" />
+      </div>
     </AdminShell>
   );
 }

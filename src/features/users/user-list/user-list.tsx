@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useDebouncedValue } from "@/hooks/use-debounce";
@@ -22,7 +23,7 @@ import styles from "./user-list.module.scss";
 const PAGE_SIZE = 20;
 
 export function UserList() {
-  const { user: currentUser } = useAuth();
+  const { user: currentUser, isSuperAdmin } = useAuth();
   const [search, setSearch] = useState("");
   const [role, setRole] = useState<UserRole | "">("");
   const [page, setPage] = useState(1);
@@ -85,23 +86,27 @@ export function UserList() {
           <option value="">All roles</option>
           <option value="USER">User</option>
           <option value="ADMIN">Admin</option>
+          <option value="SUPER_ADMIN">Super Admin</option>
         </Select>
-        <Button
-          type="button"
-          onClick={() => setShowAddAdmin((current) => !current)}
-        >
-          {showAddAdmin ? "Close" : "Add admin"}
-        </Button>
+        {isSuperAdmin && (
+          <Button type="button" onClick={() => setShowAddAdmin(true)}>
+            Add admin
+          </Button>
+        )}
       </div>
 
-      {showAddAdmin && (
-        <AddAdminForm
-          onCreated={() => {
-            setShowAddAdmin(false);
-            void refetch();
-          }}
-          onCancel={() => setShowAddAdmin(false)}
-        />
+      {isSuperAdmin && (
+        <Dialog open={showAddAdmin} onOpenChange={setShowAddAdmin}>
+          <DialogContent>
+            <AddAdminForm
+              onCreated={() => {
+                setShowAddAdmin(false);
+                void refetch();
+              }}
+              onCancel={() => setShowAddAdmin(false)}
+            />
+          </DialogContent>
+        </Dialog>
       )}
 
       {loading && <p className={styles.status}>Loading users…</p>}
@@ -128,6 +133,7 @@ export function UserList() {
               <tbody>
                 {userPage.items.map((item) => {
                   const isSelf = item.id === currentUser?.id;
+                  const isSuperAdminRow = item.role === "SUPER_ADMIN";
                   return (
                     <tr key={item.id}>
                       <td>{item.displayName ?? "—"}</td>
@@ -138,20 +144,24 @@ export function UserList() {
                       <td>{item.isEmailVerified ? "Yes" : "No"}</td>
                       <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                       <td>
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          size="sm"
-                          disabled={updatingRole || isSelf}
-                          title={
-                            isSelf
-                              ? "You can't change your own admin access"
-                              : undefined
-                          }
-                          onClick={() => void handleToggleRole(item.id, item.role)}
-                        >
-                          {item.role === "ADMIN" ? "Demote" : "Promote"}
-                        </Button>
+                        {isSuperAdmin && !isSuperAdminRow && (
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            disabled={updatingRole || isSelf}
+                            title={
+                              isSelf
+                                ? "You can't change your own admin access"
+                                : undefined
+                            }
+                            onClick={() =>
+                              void handleToggleRole(item.id, item.role)
+                            }
+                          >
+                            {item.role === "ADMIN" ? "Demote" : "Promote"}
+                          </Button>
+                        )}
                       </td>
                     </tr>
                   );

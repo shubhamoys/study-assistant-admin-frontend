@@ -29,48 +29,50 @@ export function EditDeckPage({ deckId }: EditDeckPageProps) {
 
   return (
     <AdminShell>
-      <Link href="/decks" className={styles.backLink}>
-        ← Back to decks
-      </Link>
+      <div className={styles.content}>
+        <Link href="/decks" className={styles.backLink}>
+          ← Back to decks
+        </Link>
 
-      {loading && <p className={styles.status}>Loading deck…</p>}
-      {error && (
-        <p className={styles.statusError}>
-          Couldn&apos;t load this deck — it may have been removed.
-        </p>
-      )}
+        {loading && <p className={styles.status}>Loading deck…</p>}
+        {error && (
+          <p className={styles.statusError}>
+            Couldn&apos;t load this deck — it may have been removed.
+          </p>
+        )}
 
-      {deck && (
-        <>
-          <div className={styles.headingRow}>
-            <h1 className={styles.heading}>Edit deck</h1>
-            <a
-              href={`${MAIN_APP_ORIGIN}/store/${deck.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.viewLink}
-            >
-              View in store →
-            </a>
-          </div>
-          <DeckForm
-            mode="edit"
-            deckId={deck.id}
-            initial={{
-              title: deck.title,
-              description: deck.description,
-              coverUrl: deck.coverUrl,
-              categoryId: deck.category?.id ?? "",
-              difficulty: deck.difficulty ?? "BEGINNER",
-              isFree: deck.isFree,
-              price: deck.price,
-            }}
-          />
-          <div className={styles.flashcards}>
-            <FlashcardEditor deckId={deck.id} />
-          </div>
-        </>
-      )}
+        {deck && (
+          <>
+            <div className={styles.headingRow}>
+              <h1 className={styles.heading}>Edit deck</h1>
+              <a
+                href={`${MAIN_APP_ORIGIN}/store/${deck.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.viewLink}
+              >
+                View in store →
+              </a>
+            </div>
+            <DeckForm
+              mode="edit"
+              deckId={deck.id}
+              initial={{
+                title: deck.title,
+                description: deck.description,
+                coverUrl: deck.coverUrl,
+                categoryId: deck.category?.id ?? "",
+                difficulty: deck.difficulty ?? "BEGINNER",
+                isFree: deck.isFree,
+                price: deck.price,
+              }}
+            />
+            <div className={styles.flashcards}>
+              <FlashcardEditor deckId={deck.id} />
+            </div>
+          </>
+        )}
+      </div>
     </AdminShell>
   );
 }

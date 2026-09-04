@@ -53,7 +53,10 @@ export function LoginForm() {
     try {
       const { data } = await loginMutation({ variables: { input: values } });
       if (!data) return;
-      if (data.login.user.role !== "ADMIN") {
+      if (
+        data.login.user.role !== "ADMIN" &&
+        data.login.user.role !== "SUPER_ADMIN"
+      ) {
         // Valid credentials, wrong audience — never even put a non-admin's
         // tokens in Redux/localStorage; there's nothing here for them to do.
         setNotAdmin(true);

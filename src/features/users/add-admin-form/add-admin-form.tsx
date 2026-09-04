@@ -6,6 +6,11 @@ import { useMutation } from "@apollo/client/react";
 import { CombinedGraphQLErrors } from "@apollo/client/errors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { PasswordInput } from "@/components/password-input/password-input";
 import {
   ADMIN_CREATE_ADMIN_USER_MUTATION,
@@ -52,15 +57,17 @@ export function AddAdminForm({ onCreated, onCancel }: AddAdminFormProps) {
 
   return (
     <form
-      className={`${styles.form} index-card`}
+      className={styles.form}
       onSubmit={(event) => void handleSubmit(onSubmit)(event)}
       noValidate
     >
-      <h2 className={styles.heading}>Add admin</h2>
-      <p className={styles.subheading}>
-        Creates a brand-new account with admin access directly — email is
-        marked verified automatically since you&apos;re vouching for it.
-      </p>
+      <DialogHeader>
+        <DialogTitle>Add admin</DialogTitle>
+        <DialogDescription>
+          Creates a brand-new account with admin access directly — email is
+          marked verified automatically since you&apos;re vouching for it.
+        </DialogDescription>
+      </DialogHeader>
 
       {error && <p className={styles.error}>{getErrorMessage(error)}</p>}
 

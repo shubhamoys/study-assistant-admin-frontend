@@ -11,10 +11,10 @@ import { useAuth } from "@/features/auth/use-auth";
  * localStorage only stores the access token (see auth-token.ts), not the
  * user's details — after a token is rehydrated into Redux on page load, fetch
  * `me` to populate `user`. If the token turns out to be expired/invalid, or
- * belongs to a non-admin account (a `me.role` other than "ADMIN" — e.g. a
- * regular user's token, or an admin who got demoted since they last logged
- * in here), log out cleanly rather than leaving a session an admin-only
- * resolver would just 403 anyway.
+ * belongs to a non-admin account (a `me.role` other than "ADMIN"/"SUPER_ADMIN"
+ * — e.g. a regular user's token, or an admin who got demoted since they last
+ * logged in here), log out cleanly rather than leaving a session an
+ * admin-only resolver would just 403 anyway.
  */
 export function AuthHydrator({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -26,7 +26,7 @@ export function AuthHydrator({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!data?.me) return;
-    if (data.me.role !== "ADMIN") {
+    if (data.me.role !== "ADMIN" && data.me.role !== "SUPER_ADMIN") {
       dispatch(clearCredentials());
       return;
     }

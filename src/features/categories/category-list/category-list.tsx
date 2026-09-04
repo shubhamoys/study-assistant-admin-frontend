@@ -6,6 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { CombinedGraphQLErrors } from "@apollo/client/errors";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   CATEGORIES_QUERY,
@@ -91,6 +98,7 @@ function CategoryForm({
 export function CategoryList() {
   const { data, loading, error, refetch } =
     useQuery<CategoriesQueryData>(CATEGORIES_QUERY);
+  const [showCreate, setShowCreate] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [mutationError, setMutationError] = useState<string | null>(null);
 
@@ -111,6 +119,7 @@ export function CategoryList() {
     setMutationError(null);
     try {
       await createCategory({ variables: { input: values } });
+      setShowCreate(false);
       await refetch();
     } catch (mutationErr) {
       setMutationError(getErrorMessage(mutationErr));
@@ -145,14 +154,66 @@ export function CategoryList() {
     }
   }
 
+  const editingCategory = data?.categories.find((c) => c.id === editingId);
+
   return (
     <div>
-      <div className={`${styles.createCard} index-card`}>
-        <h2 className={styles.createHeading}>New category</h2>
-        <CategoryForm submitLabel="Create" onSubmit={handleCreate} />
+      <div className={styles.header}>
+        <Button type="button" onClick={() => setShowCreate(true)}>
+          New category
+        </Button>
       </div>
 
-      {mutationError && <p className={styles.statusError}>{mutationError}</p>}
+      <Dialog
+        open={showCreate}
+        onOpenChange={(open) => {
+          setShowCreate(open);
+          if (open) setMutationError(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>New category</DialogTitle>
+          </DialogHeader>
+          {mutationError && (
+            <p className={styles.statusError}>{mutationError}</p>
+          )}
+          <CategoryForm submitLabel="Create" onSubmit={handleCreate} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={editingId !== null}
+        onOpenChange={(open) => {
+          if (!open) setEditingId(null);
+          else setMutationError(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit category</DialogTitle>
+            <DialogDescription>
+              The slug is derived from the name automatically and can&apos;t
+              be edited directly.
+            </DialogDescription>
+          </DialogHeader>
+          {mutationError && (
+            <p className={styles.statusError}>{mutationError}</p>
+          )}
+          {editingCategory && (
+            <CategoryForm
+              initial={editingCategory}
+              submitLabel="Save"
+              onSubmit={(values) => handleUpdate(editingCategory.id, values)}
+              onCancel={() => setEditingId(null)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {mutationError && !showCreate && editingId === null && (
+        <p className={styles.statusError}>{mutationError}</p>
+      )}
       {loading && <p className={styles.status}>Loading categories…</p>}
       {error && (
         <p className={styles.statusError}>
@@ -160,50 +221,39 @@ export function CategoryList() {
         </p>
       )}
 
-      <div className={styles.list}>
-        {data?.categories.map((category) =>
-          editingId === category.id ? (
-            <div key={category.id} className={`${styles.item} index-card`}>
-              <CategoryForm
-                initial={category}
-                submitLabel="Save"
-                onSubmit={(values) => handleUpdate(category.id, values)}
-                onCancel={() => setEditingId(null)}
-              />
+      <div className={styles.grid}>
+        {data?.categories.map((category) => (
+          <div key={category.id} className={`${styles.item} index-card`}>
+            <div className={styles.itemBody}>
+              <h3 className={styles.itemName}>{category.name}</h3>
+              <span className={styles.itemSlug}>{category.slug}</span>
+              {category.description && (
+                <p className={styles.itemDescription}>
+                  {category.description}
+                </p>
+              )}
             </div>
-          ) : (
-            <div key={category.id} className={`${styles.item} index-card`}>
-              <div className={styles.itemBody}>
-                <h3 className={styles.itemName}>{category.name}</h3>
-                <span className={styles.itemSlug}>{category.slug}</span>
-                {category.description && (
-                  <p className={styles.itemDescription}>
-                    {category.description}
-                  </p>
-                )}
-              </div>
-              <div className={styles.itemActions}>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setEditingId(category.id)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="sm"
-                  disabled={deleting}
-                  onClick={() => void handleDelete(category)}
-                >
-                  Delete
-                </Button>
-              </div>
+            <div className={styles.itemActions}>
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={() => setEditingId(category.id)}
+              >
+                Edit
+              </Button>
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                disabled={deleting}
+                onClick={() => void handleDelete(category)}
+              >
+                Delete
+              </Button>
             </div>
-          ),
-        )}
+          </div>
+        ))}
       </div>
     </div>
   );
