@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: "/users", label: "Users" },
   { href: "/categories", label: "Categories" },
   { href: "/decks", label: "Decks" },
+  { href: "/coupons", label: "Coupons" },
   { href: "/analytics", label: "Analytics" },
 ];
 
