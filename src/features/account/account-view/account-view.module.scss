@@ -1,0 +1,47 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 32rem;
+  padding: 0;
+}
+
+.status {
+  font-size: 0.875rem;
+  color: var(--ink-secondary);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--ink-primary);
+}
+
+.sectionButton {
+  align-self: flex-start;
+}
+
+.email {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-tertiary);
+}
+
+.successNotice {
+  border: 2px solid var(--state-success);
+  border-radius: var(--radius-btn);
+  background: var(--state-success-bg);
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--state-success);
+}

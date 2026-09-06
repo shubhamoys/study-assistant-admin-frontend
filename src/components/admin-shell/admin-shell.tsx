@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Gear } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo/logo";
 import { ThemeToggle } from "@/components/theme-toggle/theme-toggle";
 import { useAuth } from "@/features/auth/use-auth";
 import { useLogout } from "@/features/auth/use-logout";
+import { formatRole } from "@/lib/format-role";
 import styles from "./admin-shell.module.scss";
 
 // Each checkpoint appends its own section here once built. Keeping this a
@@ -45,6 +47,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </Link>
           ))}
         </nav>
+
+        <nav className={`${styles.nav} ${styles.settingsNav}`}>
+          <Link
+            href="/account"
+            className={styles.navLink}
+            data-active={pathname === "/account"}
+          >
+            <Gear size={14} weight="bold" />
+            Account settings
+          </Link>
+        </nav>
       </aside>
 
       <div className={styles.main}>
@@ -54,7 +67,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <span className={styles.userName}>
               {user?.displayName ?? user?.email}
             </span>
-            <span className="tag">{user?.role}</span>
+            {user && <span className="tag">{formatRole(user.role)}</span>}
           </div>
           <Button variant="secondary" size="sm" onClick={() => void logout()}>
             Log out

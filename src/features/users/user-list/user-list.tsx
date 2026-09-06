@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useDebouncedValue } from "@/hooks/use-debounce";
 import { useAuth } from "@/features/auth/use-auth";
+import { formatRole } from "@/lib/format-role";
 import { AddAdminForm } from "../add-admin-form/add-admin-form";
 import {
   ADMIN_UPDATE_USER_ROLE_MUTATION,
@@ -139,7 +140,7 @@ export function UserList() {
                       <td>{item.displayName ?? "—"}</td>
                       <td>{item.email}</td>
                       <td>
-                        <span className="tag">{item.role}</span>
+                        <span className="tag">{formatRole(item.role)}</span>
                       </td>
                       <td>{item.isEmailVerified ? "Yes" : "No"}</td>
                       <td>{new Date(item.createdAt).toLocaleDateString()}</td>

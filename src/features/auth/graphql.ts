@@ -13,6 +13,7 @@ export const LOGIN_MUTATION = gql`
         id
         email
         displayName
+        avatarUrl
         role
       }
     }
@@ -31,7 +32,23 @@ export const ME_QUERY = gql`
       id
       email
       displayName
+      avatarUrl
       role
+    }
+  }
+`;
+
+export const CHANGE_PASSWORD_MUTATION = gql`
+  mutation ChangePassword($input: ChangePasswordInput!) {
+    changePassword(input: $input)
+  }
+`;
+
+export const UPDATE_PROFILE_MUTATION = gql`
+  mutation UpdateProfile($input: UpdateProfileInput!) {
+    updateProfile(input: $input) {
+      id
+      displayName
     }
   }
 `;
@@ -60,4 +77,20 @@ export interface LogoutMutationVars {
 
 export interface MeQueryData {
   me: AuthUser;
+}
+
+export interface ChangePasswordMutationData {
+  changePassword: boolean;
+}
+
+export interface ChangePasswordMutationVars {
+  input: { currentPassword: string; newPassword: string };
+}
+
+export interface UpdateProfileMutationData {
+  updateProfile: { id: string; displayName: string | null };
+}
+
+export interface UpdateProfileMutationVars {
+  input: { displayName: string };
 }
