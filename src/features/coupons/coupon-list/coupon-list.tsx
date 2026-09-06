@@ -321,7 +321,7 @@ export function CouponList() {
       {loading && <p className={styles.status}>Loading coupons…</p>}
       {error && (
         <p className={styles.statusError}>
-          Couldn&apos;t load coupons — is the backend running?
+          Couldn&apos;t load coupons. Please check your connection and try again.
         </p>
       )}
       {data && data.adminCoupons.length === 0 && (

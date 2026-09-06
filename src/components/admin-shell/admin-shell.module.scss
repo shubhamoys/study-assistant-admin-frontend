@@ -18,17 +18,12 @@
 .brand {
   display: flex;
   flex-direction: column;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-style: italic;
-  font-size: 1.25rem;
-  line-height: 1.2;
-  color: var(--ink-primary);
+  align-items: flex-start;
+  gap: 0.375rem;
 }
 
 .brandSub {
   font-family: var(--font-mono);
-  font-style: normal;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;

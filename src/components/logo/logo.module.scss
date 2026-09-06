@@ -1,0 +1,27 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.light {
+  display: block;
+}
+
+.dark {
+  display: none;
+}
+
+:global(.dark) {
+  .light {
+    display: none;
+  }
+
+  .dark {
+    display: block;
+  }
+}

@@ -18,7 +18,7 @@ export function AnalyticsView() {
   if (error || !data) {
     return (
       <p className={styles.statusError}>
-        Couldn&apos;t load analytics — is the backend running?
+        Couldn&apos;t load analytics. Please check your connection and try again.
       </p>
     );
   }

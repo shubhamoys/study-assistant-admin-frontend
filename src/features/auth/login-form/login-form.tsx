@@ -81,7 +81,7 @@ export function LoginForm() {
         <span className={styles.eyebrow}>Admin panel</span>
         <h1 className={styles.heading}>Sign in to manage the platform.</h1>
         <p className={styles.subheading}>
-          Use your AI Study Assistant admin account.
+          Use your StudyLoop admin account.
         </p>
       </header>
 

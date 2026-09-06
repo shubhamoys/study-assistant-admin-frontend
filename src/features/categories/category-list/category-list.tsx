@@ -217,7 +217,7 @@ export function CategoryList() {
       {loading && <p className={styles.status}>Loading categories…</p>}
       {error && (
         <p className={styles.statusError}>
-          Couldn&apos;t load categories — is the backend running?
+          Couldn&apos;t load categories. Please check your connection and try again.
         </p>
       )}
 

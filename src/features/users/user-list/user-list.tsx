@@ -112,7 +112,7 @@ export function UserList() {
       {loading && <p className={styles.status}>Loading users…</p>}
       {error && (
         <p className={styles.statusError}>
-          Couldn&apos;t load users — is the backend running?
+          Couldn&apos;t load users. Please check your connection and try again.
         </p>
       )}
 

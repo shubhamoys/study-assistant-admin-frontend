@@ -7,11 +7,22 @@ import { z } from "zod";
 // first, so leaving an optional number field blank behaves as "not set"
 // instead of silently coercing to 0 and then failing that field's own
 // .min(...) bound with no visible error (neither field renders one below).
+//
+// z.preprocess's declared input type is always `unknown` (its ZodEffects
+// wrapper doesn't carry the preprocess function's own type), which breaks
+// @hookform/resolvers/zod's Resolver<TFieldValues> typing here since
+// CouponForm's useForm<CouponFormValues> — matching this codebase's usual
+// pattern of typing the form with the schema's *output* type — needs the
+// resolver's input type to line up with that same output type. This only
+// surfaces in `next build`'s type check, not `tsc --noEmit` run against
+// this file alone. The cast is safe: at runtime react-hook-form only ever
+// feeds this schema a raw DOM value, never relies on the declared input
+// type, so unifying input/output here just fixes the resolver's typing.
 function optionalNumber(schema: z.ZodNumber) {
   return z.preprocess(
     (val) => (val === "" || val === null ? undefined : val),
     schema.optional(),
-  );
+  ) as unknown as z.ZodType<number | undefined, z.ZodTypeDef, number | undefined>;
 }
 
 // Mirrors CreateCouponInput/UpdateCouponInput. `discountValue` means a raw

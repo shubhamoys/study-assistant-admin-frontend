@@ -41,7 +41,7 @@ export default function DashboardPage() {
       {loading && <p className={styles.status}>Loading stats…</p>}
       {error && (
         <p className={styles.statusError}>
-          Couldn&apos;t load platform stats — is the backend running?
+          Couldn&apos;t load platform stats. Please check your connection and try again.
         </p>
       )}
 

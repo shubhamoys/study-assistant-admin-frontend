@@ -86,7 +86,7 @@ export function DeckList() {
       {loading && <p className={styles.status}>Loading decks…</p>}
       {error && (
         <p className={styles.statusError}>
-          Couldn&apos;t load decks — is the backend running?
+          Couldn&apos;t load decks. Please check your connection and try again.
         </p>
       )}
       {data && data.adminDecks.length === 0 && (

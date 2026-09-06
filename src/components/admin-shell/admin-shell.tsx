@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/logo/logo";
 import { ThemeToggle } from "@/components/theme-toggle/theme-toggle";
 import { useAuth } from "@/features/auth/use-auth";
 import { useLogout } from "@/features/auth/use-logout";
@@ -29,7 +30,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <Link href="/dashboard" className={styles.brand}>
-          AI Study Assistant
+          <Logo width={150} />
           <span className={styles.brandSub}>Admin</span>
         </Link>
         <nav className={styles.nav}>

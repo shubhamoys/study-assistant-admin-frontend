@@ -27,8 +27,8 @@ const fragmentMono = Fragment_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Study Assistant — Admin",
-  description: "Platform administration for the AI Study Assistant.",
+  title: "StudyLoop — Admin",
+  description: "Platform administration for StudyLoop.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
