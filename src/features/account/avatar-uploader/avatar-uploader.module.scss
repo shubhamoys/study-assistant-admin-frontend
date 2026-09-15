@@ -1,0 +1,53 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.changeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+  border: 2px solid var(--ink-primary);
+  border-radius: var(--radius-btn);
+  background: var(--bg-card);
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-primary);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: var(--ink-primary);
+    color: var(--bg-card);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--ink-tertiary);
+}
+
+.error {
+  font-size: 0.75rem;
+  color: var(--state-error);
+}
+
+.hiddenInput {
+  display: none;
+}

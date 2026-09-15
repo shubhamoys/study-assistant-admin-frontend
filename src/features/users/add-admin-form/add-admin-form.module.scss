@@ -1,0 +1,40 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+.fieldError {
+  font-size: 0.75rem;
+  color: var(--state-error);
+}
+
+.error {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--state-error);
+  border-radius: var(--radius-btn);
+  background: var(--state-error-bg);
+  font-size: 0.8125rem;
+  color: var(--state-error);
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}

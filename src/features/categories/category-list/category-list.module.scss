@@ -1,0 +1,93 @@
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+.fieldError {
+  font-size: 0.75rem;
+  color: var(--state-error);
+}
+
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.status {
+  font-size: 0.875rem;
+  color: var(--ink-secondary);
+}
+
+.statusError {
+  font-size: 0.875rem;
+  color: var(--state-error);
+  margin-bottom: 1rem;
+}
+
+// Same tiling grid as the Decks page's card grid — a single narrow
+// left-hugging column looked especially bare here since a category has
+// even less content per card (name, slug, one-line description).
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1.25rem;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.itemBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.itemName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--ink-primary);
+}
+
+.itemSlug {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-tertiary);
+}
+
+.itemDescription {
+  margin: 0.25rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-secondary);
+}
+
+.itemActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}

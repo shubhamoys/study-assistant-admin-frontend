@@ -1,0 +1,142 @@
+// Reuses the global .index-card class (globals.css) for the card surface —
+// these rules only cover layout/typography specific to the login form.
+
+.page {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100%;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--ink-primary) 10%, transparent) 1px,
+    transparent 1.5px
+  );
+  background-size: 16px 16px;
+}
+
+.card {
+  width: 100%;
+  max-width: 26rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.875rem;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  color: var(--ink-primary);
+}
+
+.subheading {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fieldLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+.fieldError {
+  font-size: 0.75rem;
+  color: var(--state-error);
+}
+
+.formError {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  border: 2px solid var(--state-error);
+  border-radius: var(--radius-btn);
+  background: var(--state-error-bg);
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--state-error);
+}
+
+.formErrorBadge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px dashed var(--state-error);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.7rem;
+  transform: rotate(-4deg);
+}
+
+.submitButton {
+  width: 100%;
+}
+
+.formNotice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  border: 2px solid var(--state-info);
+  border-radius: var(--radius-btn);
+  background: var(--state-info-bg);
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--state-info);
+}
+
+.formNoticeBadge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px dashed var(--state-info);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.7rem;
+  transform: rotate(-4deg);
+}

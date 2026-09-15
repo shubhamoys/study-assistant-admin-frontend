@@ -1,0 +1,19 @@
+.wrap {
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 2rem;
+  color: var(--ink-primary);
+}
+
+.subheading {
+  margin: 0.25rem 0 1.5rem;
+  font-size: 0.9375rem;
+  color: var(--ink-secondary);
+}
